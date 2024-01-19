@@ -11,4 +11,17 @@ class BigNumberNode {
         this.data = data;
         this.next = null;
     }
+
+    public int getData() {
+        return data;
+    }
+
+    public BigNumberNode getNext() {
+        return next;
+    }
+
+    public void setNext(BigNumberNode next) {
+        this.next = next;
+    }
+
 }

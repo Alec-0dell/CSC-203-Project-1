@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Arrays;
 
 /**
  * Contains file processing behavior for the project.
@@ -17,11 +18,34 @@ public class FileProcessor {
      * The included tests control whether the LittleNumber or BigNumber version is used.
      *
      * @param line The line from the input file, including any newline characters
+     * @throws IOException 
      */
-    public static void parseLineUsingLittleNumber(String line) {
+    public static void parseLineUsingLittleNumber(String line){
         //TODO: Clean and parse the line (Hint: use the 'split()' method which accepts a regular expression)
+        String[] arguments = line.replaceAll("^ +| +$|( )+", "$1").split(" ");
 
         //TODO: Ensure the line contains the expected values and number of arguments, returning if necessary
+        if(arguments.length != 3){
+            return;
+        }
+        LittleNumber result;
+        switch (arguments[1]){
+            case "+":
+                result = LittleNumber.add(LittleNumber.fromString(arguments[0]), LittleNumber.fromString(arguments[2]));
+                break;
+            case "*":
+                result = LittleNumber.multiply(LittleNumber.fromString(arguments[0]), LittleNumber.fromString(arguments[2]));
+                break;
+            case "^":
+                result = LittleNumber.exponentiate(LittleNumber.fromString(arguments[0]), Integer.parseInt(arguments[2]));
+                break;
+            default:
+                return;
+        }
+
+        System.out.println(arguments[0] + " " + arguments[1] + " " + arguments[2] + " = " + result);
+
+
 
         //TODO: Parse numeric text as objects
         // Hint: Use the 'LittleNumber' class's 'fromString' method
@@ -69,6 +93,7 @@ public class FileProcessor {
      *             1: Option to use "little" or "big" number parsing. (Required)
      */
     public static void main(String[] args) {
+        String[] arguments = "3 *      4".replaceAll("^ +| +$|( )+", "$1").split(" ");
         try (BufferedReader reader = new BufferedReader(new FileReader(args[0]))) {
             String line;
             while ((line = reader.readLine()) != null) {

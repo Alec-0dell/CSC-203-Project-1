@@ -12,6 +12,19 @@ public class BigNumber {
     }
 
     // TODO: Write addition, multiplication, and exponentiation methods here or in another class
+    
+
+    public BigNumber addition(BigNumber addened){
+        return this;
+    }
+
+    public BigNumber multiplication(BigNumber addened){
+        return this;
+    }
+
+    public BigNumber exponentiation(BigNumber addened){
+        return this;
+    }
 
     public static BigNumber fromString(String string) {
 
