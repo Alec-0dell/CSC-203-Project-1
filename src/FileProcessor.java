@@ -1,7 +1,6 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Arrays;
 
 /**
  * Contains file processing behavior for the project.
@@ -21,10 +20,8 @@ public class FileProcessor {
      * @throws IOException 
      */
     public static void parseLineUsingLittleNumber(String line){
-        //TODO: Clean and parse the line (Hint: use the 'split()' method which accepts a regular expression)
         String[] arguments = line.replaceAll("^ +| +$|( )+", "$1").split(" ");
 
-        //TODO: Ensure the line contains the expected values and number of arguments, returning if necessary
         if(arguments.length != 3){
             return;
         }
@@ -44,20 +41,6 @@ public class FileProcessor {
         }
 
         System.out.println(arguments[0] + " " + arguments[1] + " " + arguments[2] + " = " + result);
-
-
-
-        //TODO: Parse numeric text as objects
-        // Hint: Use the 'LittleNumber' class's 'fromString' method
-        // Hint: For exponentiation, use Integer.parseInt for the power
-
-        //TODO: Determine which operator the line contains (Hint: Use conditionals or a switch)
-
-        //TODO: Perform the operation, storing the result
-
-        //TODO: Print the result of the operation in the proper format, e.g. "x + y = z"
-
-        //TODO: Remove the this and the above TODO comments
     }
 
     /**
@@ -67,21 +50,27 @@ public class FileProcessor {
      * @param line The line from the input file, including any newline characters
      */
     public static void parseLineUsingBigNumber(String line) {
-        //TODO: Clean and parse the line (Hint: use the 'split()' method which accepts a regular expression)
+        String[] arguments = line.replaceAll("^ +| +$|( )+", "$1").split(" ");
 
-        //TODO: Ensure the line contains the expected values and number of arguments, returning if necessary
+        if(arguments.length != 3){
+            return;
+        }
+        BigNumber result;
+        switch (arguments[1]){
+            case "+":
+                result = BigNumber.fromString(arguments[0]).addition( BigNumber.fromString(arguments[2]));
+                break;
+            case "*":
+                result = BigNumber.fromString(arguments[0]).multiplication(BigNumber.fromString(arguments[2]));
+                break;
+            case "^":
+                result = BigNumber.fromString(arguments[0]).exponentiation(Integer.parseInt(arguments[2]));
+                break;
+            default:
+                return;
+        }
 
-        //TODO: Parse numeric text as objects (Hint: Use the 'BigNumber' class's 'fromString' method)
-
-        //TODO: Determine which operator the line contains
-        // Hint: Use the 'LittleNumber' class's 'fromString' method
-        // Hint: For exponentiation, use Integer.parseInt for the power
-
-        //TODO: Perform the operation, storing the result
-
-        //TODO: Print the result of the operation in the proper format, e.g. "x + y = z"
-
-        //TODO: Remove the this and the above TODO comments
+        System.out.println(arguments[0] + " " + arguments[1] + " " + arguments[2] + " = " + result);
     }
 
     /**
@@ -93,7 +82,6 @@ public class FileProcessor {
      *             1: Option to use "little" or "big" number parsing. (Required)
      */
     public static void main(String[] args) {
-        String[] arguments = "3 *      4".replaceAll("^ +| +$|( )+", "$1").split(" ");
         try (BufferedReader reader = new BufferedReader(new FileReader(args[0]))) {
             String line;
             while ((line = reader.readLine()) != null) {
